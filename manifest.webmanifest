@@ -1,0 +1,15 @@
+{
+  "name": "FairyFarthings",
+  "short_name": "FairyFarthings",
+  "description": "A calm paycheck splitter for needs, wants and savings.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#F5F7F9",
+  "theme_color": "#F5F7F9",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
