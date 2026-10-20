@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>FairyFarthings</title>
 <meta name="description" content="A calm paycheck splitter for needs, wants and savings, with monthly savings history.">
-<meta name="theme-color" content="#F5F7F9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#141A1F" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EDEAF0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="FairyFarthings">
@@ -16,141 +15,186 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
 html{color-scheme:light}
 [hidden]{display:none!important}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{padding-top:env(safe-area-inset-top,0px)}
 img{max-width:100%}
 
-/* Layout: one calm column. Header with two tabs. Split tab = pay, thin bar, three pastel bucket cards with categories tucked away. History tab = savings total, months, add a past month, bank import. */
+/* Palette: Violet Sparkle, Garden Path, Morning Dew, Mushroom Cap, Pink Fairy */
 :root{
-  --bg:#F5F7F9; --surface:#FFFFFF; --inset:#F1F4F7; --ink:#2C3B48; --muted:#5A6874; --line:#E3E8EC; --rowline:rgba(44,59,72,.12);
-  --field:rgba(255,255,255,.72); --tabbg:#E8EDF1;
-  --blue:#DCEAF8; --blue-acc:#7FB0E0;
-  --yellow:#FBF0C4; --yellow-acc:#E6BE45;
-  --green:#DBEFDD; --green-acc:#74B98B;
-  --warn:#A8431E; --ok:#2F7A4B; --btn:#3E5568; --btnfg:#FFFFFF;
+  --bg:#f2f4f7;
+  --surface:#FFFFFF;
+  --inset:#F3F1F5;
+  --ink:#3A3540;
+  --muted:#7A7580;
+  --line:rgba(58,53,64,.1);
+  --rowline:rgba(58,53,64,.08);
+  --field:#F3F1F5;
+
+  /* Palette colors */
+  --violet:#C8C3CF;
+  --garden:#9BA88F;
+  --garden-deep:#7A8C6D;
+  --dew:#C9C5A0;
+  --dew-deep:#A8A47A;
+  --mushroom:#D9CC9F;
+  --pink:#F4D5D7;
+  --green-deep:#719971;
+
+  /* Semantic */
+  --accent:var(--garden-deep);
+  --warn:#B85A4A;
+  --ok:var(--garden-deep);
+  --btn-bg:var(--garden);
+  --btnfg:#FFFFFF;
   --font:'Nunito','Avenir Next','Segoe UI',system-ui,-apple-system,sans-serif;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#141A1F; --surface:#1C242B; --inset:#232D35; --ink:#E7EDF1; --muted:#9AA9B5; --line:#2A353E; --rowline:rgba(255,255,255,.12);
-    --field:rgba(255,255,255,.08); --tabbg:#232D35;
-    --blue:#223545; --blue-acc:#6FA5D6; --yellow:#38331F; --yellow-acc:#D9B550; --green:#213A2B; --green-acc:#6DB488;
-    --warn:#FFAB8A; --ok:#7ED6A0; --btn:#A9CBEA; --btnfg:#14202B; color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#141A1F; --surface:#1C242B; --inset:#232D35; --ink:#E7EDF1; --muted:#9AA9B5; --line:#2A353E; --rowline:rgba(255,255,255,.12);
-  --field:rgba(255,255,255,.08); --tabbg:#232D35;
-  --blue:#223545; --blue-acc:#6FA5D6; --yellow:#38331F; --yellow-acc:#D9B550; --green:#213A2B; --green-acc:#6DB488;
-  --warn:#FFAB8A; --ok:#7ED6A0; --btn:#A9CBEA; --btnfg:#14202B; color-scheme:dark;
+  --font-display:'Abhaya Libre','Georgia','Times New Roman',serif;
+  --nav-h:72px;
 }
 *{box-sizing:border-box}
 body{
   margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 var(--font);
-  padding-block:28px 64px;
+  padding-block:16px calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 16px);
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));
 }
 h1,h2,h3,p,ul{margin:0}
-h1{font-size:24px; font-weight:800; letter-spacing:-.005em}
-h2{font-size:18px; font-weight:700}
-.wrap{max-width:680px; margin:0 auto; display:grid; gap:20px; min-width:0}
-.panel{display:grid; gap:20px; min-width:0}
+h1{font:800 26px/1.2 var(--font-display); color:var(--green-deep); letter-spacing:.01em}
+h2{font:700 18px/1.3 var(--font-display); color:var(--ink); letter-spacing:.01em}
+.wrap{max-width:680px; margin:0 auto; display:grid; gap:16px; min-width:0}
+.panel{display:grid; gap:16px; min-width:0}
 
-.top{display:flex; flex-wrap:wrap; gap:14px 20px; align-items:center; justify-content:space-between}
-.tabs{display:inline-flex; gap:2px; background:var(--tabbg); border-radius:999px; padding:4px}
-.tab{border:0; background:transparent; color:var(--muted); padding:8px 22px; border-radius:999px; font:inherit; font-weight:700; cursor:pointer}
-.tab[aria-selected="true"]{background:var(--surface); color:var(--ink)}
-:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+/* Bottom nav */
+.bottom-nav{
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  background:var(--surface);
+  border-top:1px solid var(--line);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  display:flex; justify-content:space-around; align-items:stretch;
+  box-shadow:0 -2px 12px rgba(58,53,64,.06);
+}
+.nav-btn{
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  padding:10px 4px 8px; border:0; background:transparent; color:var(--muted);
+  font:600 10px/1 var(--font); letter-spacing:.02em; text-transform:uppercase; cursor:pointer;
+  transition:color .15s;
+}
+.nav-btn svg{width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.nav-btn[aria-selected="true"]{color:var(--garden-deep)}
+.nav-btn[aria-selected="true"] svg{stroke-width:2.2}
 
-.card{background:var(--surface); border-radius:20px; padding:22px}
-.pay{display:grid; gap:16px 20px; grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.top{display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 0 4px}
+.ornament{font-size:14px; color:var(--violet); letter-spacing:.15em; line-height:1}
+
+/* Cards */
+.card{
+  background:var(--surface); border-radius:16px; padding:20px;
+  border:1px solid rgba(58,53,64,.06);
+  box-shadow:0 1px 8px rgba(58,53,64,.04);
+}
+
+.pay{display:grid; gap:14px 18px; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
 .field{display:grid; gap:6px; min-width:0}
-.field label,.eyebrow{font-size:13px; color:var(--muted); font-weight:600}
-.money-in{display:flex; align-items:center; gap:4px; background:var(--inset); border-radius:14px; padding:0 16px}
-.money-in:focus-within{outline:2px solid var(--ink); outline-offset:2px}
+.field label,.eyebrow{font:600 13px/1 var(--font-display); color:var(--muted); letter-spacing:.02em; text-transform:uppercase}
+.money-in{display:flex; align-items:center; gap:4px; background:var(--inset); border-radius:12px; padding:0 16px; border:1px solid rgba(58,53,64,.06)}
+.money-in:focus-within{border-color:var(--garden); box-shadow:0 0 0 3px rgba(155,168,143,.2)}
 .money-in span{font-size:24px; font-weight:700; color:var(--muted)}
-.money-in input{border:0; background:transparent; color:var(--ink); font:800 34px var(--font); width:100%; min-width:0; padding:8px 0; outline:none; font-variant-numeric:tabular-nums}
-select,.input{background:var(--inset); color:var(--ink); border:0; border-radius:14px; font:inherit; padding:12px 14px; min-width:0}
+.money-in input{border:0; background:transparent; color:var(--ink); font:800 32px var(--font); width:100%; min-width:0; padding:8px 0; outline:none; font-variant-numeric:tabular-nums}
+select,.input{background:var(--inset); color:var(--ink); border:1px solid rgba(58,53,64,.06); border-radius:12px; font:inherit; padding:12px 14px; min-width:0}
 select{min-height:54px}
-.example{grid-column:1/-1; font-size:14px; color:var(--muted)}
+.example{grid-column:1/-1; font-size:14px; color:var(--muted); font-style:italic}
+:focus-visible{outline:2px solid var(--garden); outline-offset:2px}
 
-.btn{background:var(--btn); color:var(--btnfg); border:0; border-radius:999px; padding:14px 26px; font:inherit; font-weight:700; cursor:pointer}
-.btn.soft{background:var(--inset); color:var(--ink)}
-.btn:disabled{opacity:.45; cursor:not-allowed}
-.link{background:none; border:0; color:var(--ink); padding:8px 0; font:inherit; font-size:14px; font-weight:700; text-decoration:underline; text-underline-offset:4px; cursor:pointer}
+/* Buttons */
+.btn{
+  background:var(--btn-bg); color:var(--btnfg); border:0; border-radius:999px;
+  padding:14px 26px; font:inherit; font-weight:700; cursor:pointer;
+  transition:transform .1s, box-shadow .15s;
+  box-shadow:0 2px 8px rgba(155,168,143,.25);
+}
+.btn:active{transform:scale(.97)}
+.btn.soft{
+  background:var(--inset); color:var(--ink); border:1px solid rgba(58,53,64,.08);
+  box-shadow:none;
+}
+.btn:disabled{opacity:.4; cursor:not-allowed; transform:none}
+.link{background:none; border:0; color:var(--garden-deep); padding:8px 0; font:inherit; font-size:14px; font-weight:700; text-decoration:underline; text-underline-offset:3px; cursor:pointer}
 .link.danger{color:var(--warn)}
 
-.bar{display:flex; gap:3px; height:12px; border-radius:999px; overflow:hidden}
+/* Split bar */
+.bar{display:flex; gap:2px; height:8px; border-radius:999px; overflow:hidden; background:var(--inset)}
 .bar i{display:block; height:100%; background:var(--c); transition:width .25s ease}
 
-.bucket{background:var(--tint); display:grid; gap:14px; min-width:0}
-.b-needs{--tint:var(--blue); --acc:var(--blue-acc)}
-.b-wants{--tint:var(--yellow); --acc:var(--yellow-acc)}
-.b-savings{--tint:var(--green); --acc:var(--green-acc)}
+/* Bucket cards */
+.bucket{display:grid; gap:14px; min-width:0}
+.b-needs{--tint:var(--pink); --acc:var(--green-deep); --acc-soft:var(--pink)}
+.b-wants{--tint:var(--mushroom); --acc:var(--dew-deep); --acc-soft:var(--dew)}
+.b-savings{--tint:rgba(155,168,143,.15); --acc:var(--garden-deep); --acc-soft:rgba(155,168,143,.2)}
+.bucket.card{background:var(--surface)}
 .bhead{display:flex; justify-content:space-between; gap:12px; align-items:center}
 .btitle{display:flex; align-items:center; gap:10px}
-.sw{width:12px; height:12px; border-radius:50%; background:var(--acc); flex:none}
-.pctlabel{background:var(--field); border-radius:999px; padding:3px 14px; font-weight:800; font-variant-numeric:tabular-nums}
-.bamount{font-size:38px; line-height:1.1; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-.01em}
-.bamount small{display:block; font-size:14px; font-weight:600; color:var(--muted); letter-spacing:0; margin-top:2px}
-.bucket input[type=range]{width:100%; accent-color:var(--acc); margin:0; height:30px}
+.sw{width:10px; height:10px; border-radius:50%; background:var(--acc); flex:none}
+.bhead h2{color:var(--ink); font-size:17px}
+.pctlabel{background:var(--acc-soft); border-radius:999px; padding:4px 14px; font-weight:800; font-variant-numeric:tabular-nums; font-size:13px; color:var(--acc)}
+.bamount{font-size:34px; line-height:1.1; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-.01em; color:var(--ink)}
+.bamount small{display:block; font-size:13px; font-weight:600; color:var(--muted); margin-top:2px}
+.bucket input[type=range]{width:100%; accent-color:var(--acc); margin:0; height:28px}
 .hint{font-size:14px; color:var(--muted)}
 .hint.warn{color:var(--warn); font-weight:600}
 .hint .link{color:var(--warn); padding:0 0 0 6px}
-.toggle{justify-self:start; padding:4px 0}
+.toggle{justify-self:start; padding:4px 0; color:var(--garden-deep); font-size:13px}
 .detail{display:grid; gap:6px; border-top:1px solid var(--rowline); padding-top:8px}
 .rows{display:grid}
 .row{display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:2px 8px; align-items:center; padding:4px 0; border-top:1px solid var(--rowline)}
 .row:first-child{border-top:0}
-.name{background:transparent; color:var(--ink); border:0; border-radius:10px; font:inherit; font-weight:600; padding:8px 8px; margin-left:-8px; min-width:0}
-.amt{font-weight:700; text-align:right; font-variant-numeric:tabular-nums}
+.name{background:transparent; color:var(--ink); border:0; border-radius:8px; font:inherit; font-weight:600; padding:8px 8px; margin-left:-8px; min-width:0}
+.amt{font-weight:700; text-align:right; font-variant-numeric:tabular-nums; color:var(--ink)}
 .more{width:36px; height:36px; border:0; border-radius:50%; background:transparent; color:var(--muted); font-size:20px; line-height:1; cursor:pointer}
 .ctl{grid-column:1/-1; display:flex; gap:10px; align-items:center; flex-wrap:wrap; padding:6px 0 10px}
-.seg{display:inline-flex; background:var(--field); border-radius:999px; padding:3px}
-.seg button{background:transparent; color:var(--muted); border:0; border-radius:999px; padding:6px 14px; font:inherit; font-size:14px; font-weight:600; cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink)}
-.val{width:96px; background:var(--field); color:var(--ink); border:0; border-radius:12px; padding:8px 12px; font:inherit; font-weight:600; font-variant-numeric:tabular-nums}
+.seg{display:inline-flex; background:var(--field); border:1px solid rgba(58,53,64,.06); border-radius:999px; padding:3px}
+.seg button{background:transparent; color:var(--muted); border:0; border-radius:999px; padding:6px 14px; font:inherit; font-size:14px; font-weight:600; cursor:pointer; transition:all .15s}
+.seg button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.val{width:96px; background:var(--field); color:var(--ink); border:1px solid rgba(58,53,64,.06); border-radius:10px; padding:8px 12px; font:inherit; font-weight:600; font-variant-numeric:tabular-nums}
 .note{font-size:13px; color:var(--muted)}
 .pace{font-size:14px; color:var(--muted)}
-.pace strong{color:var(--ink)}
+.pace strong{color:var(--garden-deep)}
 
-.logrow{display:grid; gap:6px; justify-items:center; text-align:center}
+.logrow{display:grid; gap:8px; justify-items:center; text-align:center}
 .logrow .btn{width:100%; max-width:360px}
 .lognote{font-size:14px; color:var(--ok); min-height:1.3em; font-weight:600}
 .lognote .link{color:var(--ok); padding:0 0 0 6px}
 
-.total{background:var(--green); display:grid; gap:2px}
-.total .big{font-size:42px; line-height:1.1; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+/* History - total card with Garden Path tint */
+.total{background:linear-gradient(135deg, rgba(155,168,143,.18), var(--surface)); border-color:rgba(155,168,143,.2)}
+.total .big{font:800 38px/1.1 var(--font-display); font-variant-numeric:tabular-nums; letter-spacing:.01em; color:var(--garden-deep)}
 .total .eyebrow{color:var(--muted)}
-.months{padding:4px 22px}
+.months{padding:4px 20px}
 .months ul{list-style:none; padding:0; display:grid}
 .month{padding:14px 0 16px; border-top:1px solid var(--line)}
 .month:first-child{border-top:0}
 .mhead{width:100%; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 12px; align-items:baseline; text-align:left; background:transparent; border:0; color:var(--ink); font:inherit; padding:0 0 8px; cursor:pointer}
 .mname{font-weight:700}
 .mname small{display:block; font-size:13px; font-weight:600; color:var(--muted)}
-.mamt{font-weight:800; font-variant-numeric:tabular-nums}
-.track{height:8px; border-radius:999px; background:var(--inset); overflow:hidden}
-.track i{display:block; height:100%; background:var(--green-acc); border-radius:999px; min-width:4px}
+.mamt{font-weight:800; font-variant-numeric:tabular-nums; color:var(--garden-deep)}
+.track{height:6px; border-radius:999px; background:var(--inset); overflow:hidden}
+.track i{display:block; height:100%; background:var(--garden); border-radius:999px; min-width:4px}
 .items{list-style:none; padding:0; margin-top:10px; display:grid; gap:2px}
 .items li{display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:12px; align-items:center; font-size:14px; padding:2px 0}
 .items .num{font-weight:700; font-variant-numeric:tabular-nums}
-.empty{color:var(--muted); padding:4px 2px}
+.empty{color:var(--muted); padding:4px 2px; font-style:italic}
 .addpast{display:grid; gap:14px}
 .addpast p{color:var(--muted); font-size:14px}
 .formrow{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
 .formrow .input{width:120px}
-.formrow .amtin{display:flex; align-items:center; gap:4px; background:var(--inset); border-radius:14px; padding:0 14px; flex:1 1 130px; min-width:0}
+.formrow .amtin{display:flex; align-items:center; gap:4px; background:var(--inset); border:1px solid rgba(58,53,64,.06); border-radius:12px; padding:0 14px; flex:1 1 130px; min-width:0}
 .formrow .amtin span{color:var(--muted); font-weight:700}
 .formrow .amtin input{border:0; background:transparent; color:var(--ink); font:inherit; font-weight:600; padding:12px 0; width:100%; min-width:0; outline:none}
-.formrow .amtin:focus-within{outline:2px solid var(--ink); outline-offset:2px}
+.formrow .amtin:focus-within{border-color:var(--garden); box-shadow:0 0 0 3px rgba(155,168,143,.2)}
 .status{font-size:14px; color:var(--ok); min-height:1.3em; font-weight:600}
 .status.err{color:var(--warn)}
-details.card summary{font-weight:700; cursor:pointer}
+details.card summary{font:700 17px/1.3 var(--font-display); color:var(--ink); letter-spacing:.01em; cursor:pointer}
 details.card[open] summary{margin-bottom:12px}
 .imp{display:grid; gap:12px}
 .imp p{color:var(--muted); font-size:14px}
@@ -163,21 +207,52 @@ details.card[open] summary{margin-bottom:12px}
 .deps .num{font-weight:700; font-variant-numeric:tabular-nums}
 .tag{font-size:12px; color:var(--ok); font-weight:700}
 
-@media (prefers-reduced-motion: reduce){.bar i{transition:none}}
-@media (max-width:420px){.bamount{font-size:34px}.total .big{font-size:36px}.card{padding:18px}.months{padding:2px 18px}}
+/* Credit tab */
+.credit-ring{display:flex; flex-direction:column; align-items:center; gap:16px; padding:8px 0}
+.ring-wrap{position:relative; width:180px; height:180px}
+.ring-wrap svg{width:100%; height:100%; transform:rotate(-90deg)}
+.ring-wrap circle{fill:none; stroke-linecap:round}
+.ring-bg{stroke:var(--inset); stroke-width:10}
+.ring-fg{stroke-width:10; transition:stroke-dashoffset .4s ease, stroke .3s}
+.ring-center{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center}
+.ring-spent{font:800 30px/1 var(--font-display); font-variant-numeric:tabular-nums; color:var(--ink)}
+.ring-label{font-size:13px; color:var(--muted); font-weight:600}
+.credit-info{display:grid; gap:12px; width:100%}
+.credit-row{display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid var(--rowline)}
+.credit-row:last-child{border-bottom:0}
+.credit-row .label{font:600 13px/1 var(--font-display); color:var(--muted); letter-spacing:.02em; text-transform:uppercase}
+.credit-row .value{font-size:16px; font-weight:800; font-variant-numeric:tabular-nums}
+.credit-remaining{font-size:14px; text-align:center; font-weight:700; padding:8px 16px; border-radius:999px}
+.credit-remaining.ok{background:rgba(155,168,143,.15); color:var(--garden-deep)}
+.credit-remaining.warn{background:rgba(244,213,215,.5); color:var(--warn)}
+.credit-charges{display:grid; gap:10px}
+.charge-item{display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:4px 10px; align-items:center; padding:10px 0; border-top:1px solid var(--rowline)}
+.charge-item:first-child{border-top:0}
+.charge-name{font-weight:600; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.charge-amt{font-weight:700; font-variant-numeric:tabular-nums}
+.charge-date{font-size:12px; color:var(--muted); grid-column:1}
+.credit-add{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.credit-add .input{flex:1 1 100px; min-width:0}
+.credit-add .amtin{display:flex; align-items:center; gap:4px; background:var(--inset); border:1px solid rgba(58,53,64,.06); border-radius:12px; padding:0 14px; flex:1 1 100px; min-width:0}
+.credit-add .amtin span{color:var(--muted); font-weight:700}
+.credit-add .amtin input{border:0; background:transparent; color:var(--ink); font:inherit; font-weight:600; padding:12px 0; width:100%; min-width:0; outline:none}
+.credit-add .amtin:focus-within{border-color:var(--garden); box-shadow:0 0 0 3px rgba(155,168,143,.2)}
+.credit-limit-field{display:flex; align-items:center; gap:8px; font:600 14px/1 var(--font-display); color:var(--muted); letter-spacing:.02em; text-transform:uppercase}
+.credit-limit-field .amtin{flex:0 0 120px}
+
+@media (prefers-reduced-motion: reduce){.bar i,.ring-fg{transition:none}}
+@media (max-width:420px){.bamount{font-size:30px}.total .big{font-size:32px}.card{padding:16px}.months{padding:2px 16px}}
 </style>
 </head>
 <body>
 <main class="wrap">
   <header class="top">
+    <div class="ornament">⋆⊱༻𖥸༺⊰⋆</div>
     <h1>FairyFarthings</h1>
-    <div class="tabs" role="tablist" aria-label="Sections">
-      <button type="button" class="tab" role="tab" id="tab-split" aria-controls="panel-split" aria-selected="true">Split</button>
-      <button type="button" class="tab" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" tabindex="-1">History</button>
-    </div>
+    <div class="ornament">⋆⊱༻𖥸༺⊰⋆</div>
   </header>
 
-  <div class="panel" id="panel-split" role="tabpanel" aria-labelledby="tab-split">
+  <div class="panel" id="panel-split" role="tabpanel" aria-labelledby="nav-split">
     <section class="card pay" aria-label="Paycheck">
       <div class="field">
         <label for="income">Take-home pay</label>
@@ -196,7 +271,7 @@ details.card[open] summary{margin-bottom:12px}
     </section>
 
     <div class="bar" id="bar" role="img">
-      <i id="seg-needs" style="--c:var(--blue-acc)"></i><i id="seg-wants" style="--c:var(--yellow-acc)"></i><i id="seg-savings" style="--c:var(--green-acc)"></i>
+      <i id="seg-needs" style="--c:var(--green-deep)"></i><i id="seg-wants" style="--c:var(--dew-deep)"></i><i id="seg-savings" style="--c:var(--garden)"></i>
     </div>
 
     <div class="panel" id="buckets"></div>
@@ -208,7 +283,7 @@ details.card[open] summary{margin-bottom:12px}
     </div>
   </div>
 
-  <div class="panel" id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+  <div class="panel" id="panel-history" role="tabpanel" aria-labelledby="nav-history" hidden>
     <section class="card total" aria-label="Total saved">
       <p class="eyebrow">Set aside so far</p>
       <p class="big" id="totalsaved">$0.00</p>
@@ -260,19 +335,94 @@ details.card[open] summary{margin-bottom:12px}
       </div>
     </details>
   </div>
+
+  <div class="panel" id="panel-credit" role="tabpanel" aria-labelledby="nav-credit" hidden>
+    <section class="card" aria-label="Credit tracker">
+      <div class="credit-ring">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 200 200">
+            <circle class="ring-bg" cx="100" cy="100" r="85"/>
+            <circle class="ring-fg" id="credit-ring-fg" cx="100" cy="100" r="85" stroke="var(--garden)" stroke-dasharray="534.07" stroke-dashoffset="534.07"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-spent" id="credit-spent">$0</span>
+            <span class="ring-label">of <span id="credit-limit-display">$250</span></span>
+          </div>
+        </div>
+        <div id="credit-remaining" class="credit-remaining ok">$250 remaining</div>
+      </div>
+      <div class="credit-info">
+        <div class="credit-row">
+          <span class="label">Total charges</span>
+          <span class="value" id="credit-total-charges">$0.00</span>
+        </div>
+        <div class="credit-row">
+          <span class="label">Total payments</span>
+          <span class="value" id="credit-total-payments">$0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card credit-charges" aria-label="Add charge or payment">
+      <h2>Add entry</h2>
+      <div class="credit-add">
+        <input id="cc-name" class="input" type="text" placeholder="Description" maxlength="40" autocomplete="off">
+        <label class="amtin" for="cc-amt"><span>$</span><input id="cc-amt" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00"></label>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn" id="cc-charge">Add charge</button>
+        <button type="button" class="btn soft" id="cc-payment">Add payment</button>
+      </div>
+      <p class="status" id="cc-status" role="status"></p>
+    </section>
+
+    <section class="card" aria-label="Credit settings">
+      <div class="credit-limit-field">
+        <span>Credit limit</span>
+        <label class="amtin" for="cc-limit"><span>$</span><input id="cc-limit" type="text" inputmode="decimal" autocomplete="off" value="250"></label>
+        <button type="button" class="btn soft" id="cc-limit-save" style="padding:10px 18px; font-size:14px">Save</button>
+      </div>
+    </section>
+
+    <section class="card credit-charges" aria-label="Recent activity">
+      <h2>Recent activity</h2>
+      <p class="empty" id="cc-empty">No charges or payments yet.</p>
+      <div id="cc-list"></div>
+    </section>
+
+    <div style="text-align:center">
+      <button type="button" class="link danger" id="cc-clear">Clear all credit entries</button>
+    </div>
+  </div>
 </main>
+
+<nav class="bottom-nav" aria-label="Main">
+  <button type="button" class="nav-btn" id="nav-split" role="tab" aria-selected="true" aria-controls="panel-split">
+    <svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg>
+    <span>Split</span>
+  </button>
+  <button type="button" class="nav-btn" id="nav-history" role="tab" aria-selected="false" aria-controls="panel-history">
+    <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+    <span>History</span>
+  </button>
+  <button type="button" class="nav-btn" id="nav-credit" role="tab" aria-selected="false" aria-controls="panel-credit">
+    <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+    <span>Credit</span>
+  </button>
+</nav>
 
 <script>
 (function(){
   var KEYS=['needs','wants','savings'];
   var META={
-    needs:{label:'Needs',blurb:'Rent, food, bills, getting around'},
-    wants:{label:'Wants',blurb:'Fun, eating out, extras'},
-    savings:{label:'Savings',blurb:'Future you'}
+    needs:{label:'Need (つ╥﹏╥)つ',blurb:'Rent, food, bills, getting around'},
+    wants:{label:'Wants (*ᴗ͈ˬᴗ͈)ꕤ*.ﾟ',blurb:'Fun, eating out, extras'},
+    savings:{label:'Savings ( ◡̀_◡́)ᕤ',blurb:'Future you'}
   };
   var PERIODS={weekly:52,biweekly:26,semimonthly:24,monthly:12};
   var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
   var LS_KEY='paycheck-split-v1';
+  var CC_KEY='credit-tracker-v1';
   var seq=0;
   var openBuckets={}, openMonths={};
   function nid(){return 'c'+Date.now().toString(36)+(seq++);}
@@ -393,13 +543,12 @@ details.card[open] summary{margin-bottom:12px}
   }
 
   /* ---------- tabs ---------- */
-  var TABS=['split','history'];
+  var TABS=['split','history','credit'];
   function showTab(n){
     TABS.forEach(function(t){
       $('#panel-'+t).hidden=(t!==n);
-      var b=$('#tab-'+t);
+      var b=$('#nav-'+t);
       b.setAttribute('aria-selected',String(t===n));
-      b.tabIndex=(t===n)?0:-1;
     });
   }
 
@@ -408,7 +557,7 @@ details.card[open] summary{margin-bottom:12px}
     var name=el('input',{class:'name',type:'text',value:c.name,maxlength:'40','aria-label':'Category name'});
     name.addEventListener('input',function(){c.name=name.value;changed();});
     var amt=el('output',{class:'amt','data-amt':c.id});
-    var more=el('button',{type:'button',class:'more','aria-label':'Edit this category','aria-expanded':'false',text:'⋯'});
+    var more=el('button',{type:'button',class:'more','aria-label':'Edit this category','aria-expanded':'false',text:'...'});
     var val=el('input',{class:'val',type:'text',inputmode:'decimal',autocomplete:'off',value:c.val});
     val.addEventListener('input',function(){c.val=val.value;changed();});
     var bShare=el('button',{type:'button',text:'Share'});
@@ -596,7 +745,7 @@ details.card[open] summary{margin-bottom:12px}
       if(g.logs)parts.push(g.logs+' paycheck'+(g.logs===1?'':'s'));
       if(g.past)parts.push('added by hand');
       var head=el('button',{type:'button',class:'mhead','aria-expanded':String(!!openMonths[g.key])},
-        el('span',{class:'mname'},document.createTextNode(monthLabel(g.key)),el('small',{text:parts.join(' · ')})),
+        el('span',{class:'mname'},document.createTextNode(monthLabel(g.key)),el('small',{text:parts.join(' + ')})),
         el('span',{class:'mamt',text:usd.format(g.total)})
       );
       var track=el('div',{class:'track'},el('i',{style:'width:'+(max>0?Math.max(2,Math.round(g.total/max*100)):0)+'%'}));
@@ -645,7 +794,7 @@ details.card[open] summary{margin-bottom:12px}
 
   /* ---------- CSV import ---------- */
   function parseCSV(t){
-    t=t.replace(/^﻿/,'');
+    t=t.replace(/^\xEF\xBB\xBF/,'');
     var rows=[],r=[],f='',q=false,i,ch;
     for(i=0;i<t.length;i++){
       ch=t[i];
@@ -745,6 +894,78 @@ details.card[open] summary{margin-bottom:12px}
     });
   }
 
+  /* ---------- Credit tracker ---------- */
+  var ccState={limit:250,entries:[]};
+  function loadCC(){try{var r=localStorage.getItem(CC_KEY);if(r){var d=JSON.parse(r);if(d&&typeof d==='object'){ccState.limit=+d.limit||250;ccState.entries=(Array.isArray(d.entries)?d.entries:[]).slice(-500);}}}catch(e){}}
+  function saveCC(){try{localStorage.setItem(CC_KEY,JSON.stringify(ccState));}catch(e){}}
+
+  function ccTotals(){
+    var charges=0,payments=0;
+    ccState.entries.forEach(function(e){
+      if(e.type==='charge')charges+=e.amount;
+      else payments+=e.amount;
+    });
+    return {charges:charges,payments:payments,balance:charges-payments};
+  }
+
+  function renderCredit(){
+    var t=ccTotals();
+    var limit=ccState.limit;
+    var remaining=limit-t.balance;
+    var pct=limit>0?Math.min(1,Math.max(0,t.balance/limit)):0;
+    var circumference=2*Math.PI*85;
+    var offset=circumference*(1-pct);
+    var ring=$('#credit-ring-fg');
+    ring.style.strokeDasharray=circumference;
+    ring.style.strokeDashoffset=offset;
+    ring.style.stroke=pct>0.85?'var(--green-deep)':pct>0.65?'var(--dew-deep)':'var(--garden)';
+    $('#credit-spent').textContent=usd0.format(t.balance);
+    $('#credit-limit-display').textContent=usd0.format(limit);
+    var rem=$('#credit-remaining');
+    if(remaining>=0){
+      rem.textContent=usd.format(remaining)+' remaining';
+      rem.className='credit-remaining ok';
+    }else{
+      rem.textContent=usd.format(Math.abs(remaining))+' over limit!';
+      rem.className='credit-remaining warn';
+    }
+    $('#credit-total-charges').textContent=usd.format(t.charges);
+    $('#credit-total-payments').textContent=usd.format(t.payments);
+    $('#cc-limit').value=String(limit);
+
+    var list=$('#cc-list');
+    list.textContent='';
+    var entries=ccState.entries.slice().reverse();
+    $('#cc-empty').hidden=entries.length>0;
+    entries.forEach(function(e){
+      var rm=el('button',{type:'button',class:'more','aria-label':'Remove',text:'x'});
+      rm.addEventListener('click',function(){
+        ccState.entries=ccState.entries.filter(function(x){return x.id!==e.id;});
+        saveCC();renderCredit();
+      });
+      var row=el('div',{class:'charge-item'},
+        el('span',{class:'charge-name',text:e.name||(e.type==='charge'?'Charge':'Payment')}),
+        el('span',{class:'charge-amt',text:(e.type==='payment'?'-':'')+usd.format(e.amount)}),
+        rm,
+        el('span',{class:'charge-date',text:fmtDate(e.date)})
+      );
+      list.append(row);
+    });
+  }
+
+  function addCCEntry(type){
+    var st=$('#cc-status');
+    var amt=num($('#cc-amt').value);
+    if(amt<=0){st.className='status err';st.textContent='Enter an amount.';return;}
+    var name=$('#cc-name').value.trim().slice(0,40);
+    ccState.entries.push({id:nid(),type:type,name:name,amount:Math.round(amt*100)/100,date:todayISO()});
+    ccState.entries=ccState.entries.slice(-500);
+    saveCC();renderCredit();
+    $('#cc-amt').value='';$('#cc-name').value='';
+    st.className='status';
+    st.textContent=(type==='charge'?'Charge':'Payment')+' added.';
+  }
+
   /* ---------- wire up ---------- */
   function applyToUI(){
     $('#income').value=state.income;
@@ -761,27 +982,41 @@ details.card[open] summary{margin-bottom:12px}
   $('#csv').addEventListener('change',function(e){onFile(e.target.files&&e.target.files[0]);e.target.value='';});
   $('#pm-add').addEventListener('click',addPast);
   $('#pm-amt').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addPast();}});
-  TABS.forEach(function(t,i){
-    var b=$('#tab-'+t);
-    b.addEventListener('click',function(){showTab(t);});
-    b.addEventListener('keydown',function(e){
-      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
-        var n=TABS[(i+(e.key==='ArrowRight'?1:TABS.length-1))%TABS.length];
-        showTab(n);$('#tab-'+n).focus();
-      }
+
+  // Bottom nav
+  TABS.forEach(function(t){
+    $('#nav-'+t).addEventListener('click',function(){
+      showTab(t);
+      window.scrollTo({top:0,behavior:'smooth'});
     });
+  });
+
+  // Credit events
+  $('#cc-charge').addEventListener('click',function(){addCCEntry('charge');});
+  $('#cc-payment').addEventListener('click',function(){addCCEntry('payment');});
+  $('#cc-limit-save').addEventListener('click',function(){
+    var v=num($('#cc-limit').value);
+    if(v>0){ccState.limit=v;saveCC();renderCredit();}
+  });
+  $('#cc-clear').addEventListener('click',function(){
+    if(ccState.entries.length===0)return;
+    if(confirm('Remove all credit entries? This cannot be undone.')){
+      ccState.entries=[];saveCC();renderCredit();
+    }
   });
 
   initPast();
   var local=loadLocal();
   if(local)state=sanitize(local);
+  loadCC();
   applyToUI();
+  renderCredit();
 
   /* ---------- backup ---------- */
   var pendingBackup=null;
   function bkStatus(t,err){var s=$('#bk-status');s.className='status'+(err?' err':'');s.textContent=t;}
   async function exportBackup(){
-    var payload=JSON.stringify({app:'paycheck-split',version:2,exportedAt:new Date().toISOString(),data:state},null,2);
+    var payload=JSON.stringify({app:'paycheck-split',version:2,exportedAt:new Date().toISOString(),data:state,credit:ccState},null,2);
     var name='fairyfarthings-backup-'+todayISO()+'.json';
     try{
       var file=new File([payload],name,{type:'application/json'});
@@ -804,19 +1039,23 @@ details.card[open] summary{margin-bottom:12px}
     file.text().then(function(t){
       var obj=JSON.parse(t);
       if(!obj||obj.app!=='paycheck-split'||!obj.data)throw new Error('bad');
-      pendingBackup=sanitize(obj.data);
-      var n=pendingBackup.history.length+pendingBackup.past.length;
+      pendingBackup={data:sanitize(obj.data),credit:obj.credit||null};
+      var n=pendingBackup.data.history.length+pendingBackup.data.past.length;
       bkStatus('Backup found with '+n+' savings entr'+(n===1?'y':'ies')+'. Restoring replaces what is on this phone.');
       $('#bk-confirm').hidden=false;
     }).catch(function(){bkStatus('That file is not a FairyFarthings backup.',true);});
   }
   function restoreBackup(){
     if(!pendingBackup)return;
-    state=pendingBackup;
+    state=pendingBackup.data;
+    if(pendingBackup.credit){
+      ccState.limit=+pendingBackup.credit.limit||250;
+      ccState.entries=Array.isArray(pendingBackup.credit.entries)?pendingBackup.credit.entries:[];
+    }
     pendingBackup=null;
     openBuckets={};openMonths={};
-    flushSave();
-    applyToUI();
+    flushSave();saveCC();
+    applyToUI();renderCredit();
     $('#bk-confirm').hidden=true;
     bkStatus('Restored.');
   }
@@ -826,8 +1065,8 @@ details.card[open] summary{margin-bottom:12px}
   $('#bk-restore').addEventListener('click',restoreBackup);
 
   /* ---------- keep data safe, work offline ---------- */
-  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')flushSave();});
-  window.addEventListener('pagehide',flushSave);
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'){flushSave();saveCC();}});
+  window.addEventListener('pagehide',function(){flushSave();saveCC();});
   try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
   if('serviceWorker' in navigator){
     window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});

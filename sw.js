@@ -1,5 +1,5 @@
 // Caches the app so it opens offline. Bump CACHE when you want everyone to refetch.
-const CACHE = 'fairyfarthings-v1';
+const CACHE = 'fairyfarthings-v4';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
